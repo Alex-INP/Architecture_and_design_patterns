@@ -10,6 +10,8 @@ def application(environ, start_response):
     router = MainRouter(registered_urls)
     url = environ["PATH_INFO"]
     method = environ["REQUEST_METHOD"]
+    if url[-1] == "/":
+        url = url[:-1]
 
     if router.is_exist(url):
         controller = router.get_controller(url)()
@@ -19,4 +21,5 @@ def application(environ, start_response):
 
     controller.set_method(method)
     start_response('200 OK', [('Content-Type', 'text/html')])
-    return controller.execute()
+    return [controller.execute()]
+
