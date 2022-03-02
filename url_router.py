@@ -19,7 +19,9 @@ class MainRouter:
 		return True if url in self.url_list else False
 
 	def get_controller(self, url):
-		return self.url_pairs[url]
+		for pair in self.url_pairs:
+			if pair["url"] == url:
+				return pair["controller"]
 
 
 
