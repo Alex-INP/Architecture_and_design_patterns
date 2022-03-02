@@ -12,11 +12,11 @@ def application(environ, start_response):
     method = environ["REQUEST_METHOD"]
 
     if router.is_exist(url):
-        controller = router.get_controller(url)
+        controller = router.get_controller(url)()
     else:
         print(f"No route '{vrb.SITE_ADR}:{vrb.SITE_PORT}{url}' registered")
         return
 
+    controller.set_method(method)
     start_response('200 OK', [('Content-Type', 'text/html')])
-    return controller(method=method).execute()
-
+    return controller.execute()
