@@ -3,19 +3,34 @@ from urls.page_urls import *
 import common.variables as vrb
 
 
+def replace_hex(text):
+    ind = 0
+    for i in text:
+        if i == "%":
+            target = text[ind: ind + 3]
+            text = text.replace(target, bytes.fromhex(target[1:]).decode(), 1)
+            ind -= 1
+            continue
+        elif i == "+":
+            text = text.replace("+", " ", 1)
+        ind += 1
+    return text
+
+
 def extract_request_data(environ):
     result = {}
 
     data_length = environ.get("CONTENT_LENGTH")
     data_length = int(data_length) if data_length else 0
-    data_bytes = environ["wsgi.input"].read(data_length) if data_length > 0 else b""
+    data_bytes = environ["wsgi.input"].read(
+        data_length) if data_length > 0 else b""
 
     data_decoded = data_bytes.decode()
     if data_decoded:
         data = data_decoded.split("&")
         for i in data:
             key, value = i.split("=")
-            result[key] = value
+            result[key] = replace_hex(value)
     return result
 
 
@@ -27,7 +42,6 @@ def application(environ, start_response):
     router = MainRouter(registered_urls)
     url = environ["PATH_INFO"]
     method = environ["REQUEST_METHOD"]
-
 
     if url[-1] == "/":
         url = url[:-1]
@@ -44,4 +58,3 @@ def application(environ, start_response):
     controller.set_method(method)
     start_response('200 OK', [('Content-Type', 'text/html')])
     return [controller.execute()]
-
