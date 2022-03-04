@@ -6,11 +6,11 @@ import common.variables as vrb
 def extract_request_data(environ):
     result = {}
 
-    data_length = environ["CONTENT_LENGTH"]
+    data_length = environ.get("CONTENT_LENGTH")
     data_length = int(data_length) if data_length else 0
     data_bytes = environ["wsgi.input"].read(data_length) if data_length > 0 else b""
 
-    data_decoded = {data_bytes.decode()}
+    data_decoded = data_bytes.decode()
     if data_decoded:
         data = data_decoded.split("&")
         for i in data:
