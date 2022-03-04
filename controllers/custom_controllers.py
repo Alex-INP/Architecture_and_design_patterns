@@ -19,3 +19,6 @@ class ContactsController(BasicController):
 		super().__init__()
 		self.template = "contacts.html"
 
+	def post(self, data):
+		return bytes(f"Your data: {data}", "utf-8")
+

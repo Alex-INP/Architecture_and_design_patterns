@@ -12,6 +12,8 @@ class BasicController:
 	def execute(self):
 		for func_name, func in inspect.getmembers(self, inspect.ismethod):
 			if func_name == self.method.lower() and func_name in ["get", "post", "update", "delete"]:
+				if self.data:
+					return func(self.data)
 				return func()
 		print(f"Method error: no method {self.method} defined for this controller.")
 
