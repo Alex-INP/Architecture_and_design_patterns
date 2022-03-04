@@ -10,6 +10,9 @@ def application(environ, start_response):
     router = MainRouter(registered_urls)
     url = environ["PATH_INFO"]
     method = environ["REQUEST_METHOD"]
+    query_params = environ['QUERY_STRING']
+    print(query_params)
+
     if url[-1] == "/":
         url = url[:-1]
 

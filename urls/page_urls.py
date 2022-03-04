@@ -1,10 +1,11 @@
 import sys
 sys.path.append("..")
 
-from controllers.custom_controllers import IndexController, AboutUsController
+from controllers.custom_controllers import IndexController, AboutUsController, ContactsController
 
 
 registered_urls = [
 	["/index", IndexController],
-	["/aboutus", AboutUsController]
+	["/aboutus", AboutUsController],
+	["/contacts", ContactsController],
 ]

@@ -6,9 +6,13 @@
     <title>Title</title>
 </head>
 <body>
-    {% for name in names %}
-        <div>Hello, {{ name }}</div>
-    {% endfor %}
+<form method="post" action="save_info">
+    <div>Name:</div>
+    <input type="text"/>
+    <div>Age:</div>
+    <input type="number"/>
+    <button type="submit">Submit</button>
+</form>
 
 </body>
 </html>

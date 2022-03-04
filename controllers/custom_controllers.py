@@ -13,3 +13,9 @@ class AboutUsController(BasicController):
 		super().__init__()
 		self.template = "about_templates/about_main.html"
 
+
+class ContactsController(BasicController):
+	def __init__(self):
+		super().__init__()
+		self.template = "contacts.html"
+
