@@ -10,8 +10,7 @@ def application(environ, start_response):
     router = MainRouter(registered_urls)
     url = environ["PATH_INFO"]
     method = environ["REQUEST_METHOD"]
-    query_params = environ['QUERY_STRING']
-    print(query_params)
+
 
     if url[-1] == "/":
         url = url[:-1]
@@ -21,6 +20,12 @@ def application(environ, start_response):
     else:
         print(f"No route '{vrb.SITE_ADR}:{vrb.SITE_PORT}{url}' registered")
         return
+
+    if method == "POST":
+        print("its post")
+        query_params = environ['QUERY_STRING']
+        print(query_params)
+        controller.set_data(query_params)
 
     controller.set_method(method)
     start_response('200 OK', [('Content-Type', 'text/html')])
