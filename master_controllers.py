@@ -7,7 +7,7 @@ class BasicController:
 		self.template = ""
 		self.context = {}
 		self.method = ""
-		self.data = ""
+		self.data = {}
 
 	def execute(self):
 		for func_name, func in inspect.getmembers(self, inspect.ismethod):
@@ -23,7 +23,7 @@ class BasicController:
 	def set_data(self, data):
 		self.data = data
 
-	def get(self):
+	def get(self, data):
 		return render_template(self.template, **self.context)
 
 
