@@ -4,6 +4,7 @@ import common.variables as vrb
 
 
 def replace_hex(text):
+    text = text.replace("+", " ")
     ind = 0
     for i in text:
         if i == "%":
@@ -11,8 +12,6 @@ def replace_hex(text):
             text = text.replace(target, bytes.fromhex(target[1:]).decode(), 1)
             ind -= 1
             continue
-        elif i == "+":
-            text = text.replace("+", " ", 1)
         ind += 1
     return text
 
