@@ -1,4 +1,4 @@
-from master_controllers import BasicController
+from wsgi_framework.master_controllers import BasicController
 
 
 class IndexController(BasicController):
@@ -18,5 +18,3 @@ class ContactsController(BasicController):
 	def __init__(self):
 		super().__init__()
 		self.template = "contacts.html"
-
-

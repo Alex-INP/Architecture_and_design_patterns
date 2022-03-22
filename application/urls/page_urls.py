@@ -1,7 +1,7 @@
 import sys
 sys.path.append("..")
 
-from controllers.custom_controllers import IndexController, AboutUsController, ContactsController
+from application.controllers.custom_controllers import IndexController, AboutUsController, ContactsController
 
 
 registered_urls = [

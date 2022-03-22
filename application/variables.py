@@ -5,3 +5,4 @@ TEMPLATE_DIR = os.path.join(os.getcwd(), "templates")
 
 SITE_ADR = "127.0.0.1"
 SITE_PORT = 8000
+

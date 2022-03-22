@@ -1,6 +1,6 @@
 import inspect
 
-from template_creator import render_template
+from wsgi_framework.template_creator import render_template
 
 class BasicController:
 	def __init__(self):
