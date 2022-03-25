@@ -1,9 +1,12 @@
+import os
+
 from wsgi_framework.url_router import MainRouter
 
-global variables
-import variables as vrb
-global urls
-from urls.page_urls import registered_urls
+from config import settings
+from wsgi_framework.framework_logger import Logger
+
+LOG = Logger()
+
 
 def replace_hex(text):
     text = text.replace("+", " ")
@@ -34,56 +37,38 @@ def extract_request_data(environ):
             result[key] = replace_hex(value)
     return result
 
+
 class MainEngine:
     def __init__(self):
         pass
 
     def __call__(self, environ, start_response):
-        router = MainRouter(registered_urls)
+        router = MainRouter(settings.registered_urls)
         url = environ["PATH_INFO"]
         method = environ["REQUEST_METHOD"]
+
+        if LOG.is_type_enabled("Info"):
+            LOG["Info"](f"Request registered on: {url}")
 
         if url[-1] == "/":
             url = url[:-1]
 
         if router.is_exist(url):
             controller = router.get_controller(url)()
+            if LOG.is_type_enabled("Debug"):
+                LOG["Debug"](f"Controller '{controller.__class__.__name__}' extracted from router.")
         else:
-            print(f"No route '{vrb.SITE_ADR}:{vrb.SITE_PORT}{url}' registered")
+            if LOG.is_type_enabled("ERROR"):
+                LOG["ERROR"](f"No route '{settings.SITE_ADR}:{settings.SITE_PORT}{url}' registered")
             return
 
         data = extract_request_data(environ)
         controller.set_data(data)
         controller.set_method(method)
 
+        if LOG.is_type_enabled("Debug"):
+            LOG["Debug"](f"Procedures finished. Controller '{controller.__class__.__name__}' ready.")
+
         start_response('200 OK', [('Content-Type', 'text/html')])
         return [controller.execute()]
 
-
-
-
-
-# def application(environ, start_response):
-#     """
-#     :param environ: словарь данных от сервера
-#     :param start_response: функция для ответа серверу
-#     """
-#     router = MainRouter(registered_urls)
-#     url = environ["PATH_INFO"]
-#     method = environ["REQUEST_METHOD"]
-#
-#     if url[-1] == "/":
-#         url = url[:-1]
-#
-#     if router.is_exist(url):
-#         controller = router.get_controller(url)()
-#     else:
-#         print(f"No route '{vrb.SITE_ADR}:{vrb.SITE_PORT}{url}' registered")
-#         return
-#
-#     data = extract_request_data(environ)
-#     controller.set_data(data)
-#
-#     controller.set_method(method)
-#     start_response('200 OK', [('Content-Type', 'text/html')])
-#     return [controller.execute()]

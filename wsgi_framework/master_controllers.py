@@ -1,6 +1,9 @@
 import inspect
 
 from wsgi_framework.template_creator import render_template
+from wsgi_framework.framework_logger import Logger
+
+LOG = Logger()
 
 class BasicController:
 	def __init__(self):
@@ -12,9 +15,12 @@ class BasicController:
 	def execute(self):
 		for func_name, func in inspect.getmembers(self, inspect.ismethod):
 			if func_name == self.method.lower() and func_name in ["get", "post", "update", "delete"]:
+				if LOG.is_type_enabled("Info"):
+					LOG["Info"](f"Method approved and about to execute: '{func_name}'.")
 				return func(self.data)
 
-		print(f"Method error: no method {self.method} defined for this controller.")
+		if LOG.is_type_enabled("ERROR"):
+			LOG["ERROR"](f"Method error: no method {self.method} defined for this controller.")
 
 	def set_method(self, method):
 		self.method = method

@@ -2,18 +2,24 @@ import os
 import re
 
 from jinja2 import Template
+from config import settings
 
-global variables
-import variables as vrb
+from wsgi_framework.exceptions import SectionTagNameDuplicationError, TemplateException, NoParentTemplateError
+from wsgi_framework.framework_logger import Logger
 
+LOG = Logger()
 
 def render_template(path, **kwargs):
-	template_body = load_template_body(path)
-	tags_count = get_tags_count(template_body)
-	for _ in range(tags_count):
-		template_body = process_special_tags(template_body)
+	try:
+		template_body = load_template_body(path)
+		tags_count = get_tags_count(template_body)
+		for _ in range(tags_count):
+			template_body = process_special_tags(template_body)
 
-	template_body = Template(template_body)
+		template_body = Template(template_body)
+	except:
+		raise TemplateException(template=path)
+
 	return bytes(template_body.render(**kwargs), "utf-8")
 
 
@@ -70,7 +76,7 @@ def parse_template_sections(template):
 		if section_name not in sections_data:
 			sections_data.append(section_name)
 		else:
-			raise KeyError(f"Section name in template is not unique: '{section_name}'.")
+			raise SectionTagNameDuplicationError(section_name)
 	return sections_data
 
 
@@ -86,17 +92,16 @@ def load_template_body(path):
 		with open(template_path["template_dir"], "r", encoding="utf-8") as file:
 			template_body = file.read()
 	except FileNotFoundError:
-		print(f"Not found: No parent template '{path}' found.")
-		raise FileNotFoundError
+		raise NoParentTemplateError(path)
 	return template_body
 
 
 def get_template_path_data(path):
 	templates_segment, name = os.path.split(path)
 	if templates_segment:
-		path_body = os.path.join(vrb.TEMPLATE_DIR, templates_segment)
+		path_body = os.path.join(settings.TEMPLATES_DIR, templates_segment)
 	else:
-		path_body = os.path.join(vrb.TEMPLATE_DIR, vrb.GLOBAL_TEMPLATE_DIR)
+		path_body = os.path.join(settings.TEMPLATES_DIR, settings.GLOBAL_TEMPLATES_DIR)
 	template_dir = os.path.join(path_body, name)
 	return {"template_dir": template_dir, "template_name": name, "template_path": path_body}
 
