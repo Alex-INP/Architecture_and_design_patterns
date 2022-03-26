@@ -2,7 +2,6 @@ import sys
 sys.path.append("..")
 import os
 import platform
-from importlib import import_module
 
 from wsgi_framework.main import MainEngine
 from wsgi_framework.exceptions import NoSettingDefinedError
@@ -10,13 +9,7 @@ from wsgi_framework.framework_logger import Logger
 
 from config import settings
 from urls.page_urls import registered_urls
-
-# spec = importlib.util.spec_from_file_location("custom_logger.py", os.path.join(os.path.join(os.getcwd(), "logging"), "custom_logger.py"))
-# foo = importlib.util.module_from_spec(spec)
-# spec.loader.exec_module(foo)
-
-# if settings.DEFAULT_LOGGER == "False":
-
+from application.logging.custom_logger import setup_custom_logger
 
 
 def setup_logger():
@@ -45,11 +38,12 @@ def process_settings():
 			settings.LOG_FILE)
 		settings.TEMPLATES_DIR = os.path.join(os.getcwd(), settings.TEMPLATES_DIR)
 
-		settings.registered_urls = registered_urls
+		settings.REGISTERED_URLS = registered_urls
 		settings.DEBUG = True if settings.DEBUG.lower() == "true" else False
 		settings.LOGGING = True if settings.LOGGING.lower() == "true" else False
 	except AttributeError as e:
 		raise NoSettingDefinedError(e)
+
 
 	if settings.LOGGING:
 		try:
@@ -60,7 +54,7 @@ def process_settings():
 		if settings.DEFAULT_LOGGER:
 			setup_logger()
 		elif not settings.DEFAULT_LOGGER:
-			import_module(f"{os.path.basename(os.getcwd())}.logging.custom_logger")
+			setup_custom_logger()
 
 
 process_settings()

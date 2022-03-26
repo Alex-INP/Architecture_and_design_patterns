@@ -41,7 +41,10 @@ class MainEngine:
         pass
 
     def __call__(self, environ, start_response):
-        router = MainRouter(settings.registered_urls)
+        print("____")
+        print(settings.as_dict())
+        router = MainRouter(settings.REGISTERED_URLS)
+
         url = environ["PATH_INFO"]
         method = environ["REQUEST_METHOD"]
 

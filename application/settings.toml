@@ -4,11 +4,11 @@ TEMPLATES_DIR = "templates"
 GLOBAL_TEMPLATES_DIR = "global_templates"
 
 LOGGING = "True"
-LOGGER_STDOUT = "console"
+LOGGER_STDOUT = "both"
 LOG_FILE = "mylog"
 LOG_FILE_DIR = "logging"
 
-DEFAULT_LOGGER = "True"
+DEFAULT_LOGGER = "False"
 DEFAULT_LOGGER_EXCLUDE = ["Info"]
 
 SITE_ADR = "127.0.0.1"
