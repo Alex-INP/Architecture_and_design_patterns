@@ -1,5 +1,3 @@
-import os
-
 from wsgi_framework.url_router import MainRouter
 
 from config import settings

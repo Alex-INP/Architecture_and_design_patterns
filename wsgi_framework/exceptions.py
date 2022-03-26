@@ -34,6 +34,11 @@ class NoLogFileError(WsgiFrameworkException):
 	def __init__(self, file_path):
 		super().__init__(f"LOGGER_STDOUT setting was set to 'file' or 'both', but no LOG_FILE or LOG_FILE_DIR setting specified or directory not exists: {file_path}")
 
+
+class OutputModeError(WsgiFrameworkException):
+	def __init__(self):
+		super().__init__(f"Logger's output mode cannot be None.")
+
 # Template exceptions
 class TemplateException(WsgiFrameworkException):
 	def __init__(self, template=None, message=None):

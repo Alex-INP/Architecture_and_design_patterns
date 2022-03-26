@@ -9,7 +9,8 @@ class IndexController(BasicController):
 		self.template = "index.html"
 		self.context = {"names": ["Alex", "Bill", "Kate"]}
 
-		LOG["My_Logtype_1"](f"My own controller '{self.__class__.__name__}' ready to deal with {self.template}.")
+		if LOG.is_type_enabled("My_Logtype_1"):
+			LOG["My_Logtype_1"](f"My own controller '{self.__class__.__name__}' ready to deal with {self.template}.")
 
 
 class AboutUsController(BasicController):

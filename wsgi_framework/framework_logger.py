@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from wsgi_framework.exceptions import LogTypeNameDuplicationError, LogTypeNotRegisteredError, LoggerStdoutSettingError,\
-	NoLogFileError
+	NoLogFileError, OutputModeError
 
 class Logger:
 	def __new__(cls):
@@ -32,8 +32,12 @@ class Logger:
 		if log_type.name not in self.log_types.keys():
 			if self.file_path is not None:
 				log_type.set_file_path(self.file_path)
+			# if self.output_mode is not None:
+			# 	log_type.set_output_mode(self.output_mode)
 			if self.output_mode is not None:
 				log_type.set_output_mode(self.output_mode)
+			else:
+				raise OutputModeError
 			self.log_types[log_type.name] = log_type
 		else:
 			raise LogTypeNameDuplicationError(log_type.name)
