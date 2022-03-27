@@ -33,21 +33,21 @@ def process_settings():
 	try:
 		settings.APP_DIR_PATH = os.getcwd()
 		settings.APP_LOGGER_DIR_PATH = os.path.join(settings.APP_DIR_PATH, "logging")
-		settings.APP_LOG_DIR_PATH = os.path.join(
-			os.path.join(settings.APP_DIR_PATH, settings.LOG_FILE_DIR),
-			settings.LOG_FILE)
 		settings.TEMPLATES_DIR = os.path.join(os.getcwd(), settings.TEMPLATES_DIR)
-
 		settings.REGISTERED_URLS = registered_urls
-		settings.DEBUG = True if settings.DEBUG.lower() == "true" else False
+
 		settings.LOGGING = True if settings.LOGGING.lower() == "true" else False
+		settings.DEBUG = True if settings.DEBUG.lower() == "true" else False
 	except AttributeError as e:
 		raise NoSettingDefinedError(e)
-
 
 	if settings.LOGGING:
 		try:
 			settings.DEFAULT_LOGGER = True if settings.DEFAULT_LOGGER.lower() == "true" else False
+			if settings.LOGGER_STDOUT == "file" or settings.LOGGER_STDOUT == "both":
+				settings.APP_LOG_DIR_PATH = os.path.join(
+					os.path.join(settings.APP_DIR_PATH, settings.LOG_FILE_DIR),
+					settings.LOG_FILE)
 		except AttributeError as e:
 			raise NoSettingDefinedError(e)
 

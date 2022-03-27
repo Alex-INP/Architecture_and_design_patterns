@@ -21,7 +21,8 @@ class Logger:
 		return self.log_types[item]
 
 	def set_output_mode(self, output_mode):
-		self.output_mode = output_mode
+		if output_mode in ["console", "file", "both"]:
+			self.output_mode = output_mode
 
 	def set_file_path(self, file_path):
 		self.file_path = file_path

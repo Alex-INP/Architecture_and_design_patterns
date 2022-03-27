@@ -3,11 +3,11 @@ from config import settings
 
 
 def setup_custom_logger():
-	# Create your custom loggers here
-
 	LOG = Logger()
 	LOG.set_file_path(settings.APP_LOG_DIR_PATH)
 	LOG.set_output_mode(settings.LOGGER_STDOUT)
+
+	# Create your custom logger here
 
 	colors = LogColors()
 	colors.add_color("my_color", "\033[96m")

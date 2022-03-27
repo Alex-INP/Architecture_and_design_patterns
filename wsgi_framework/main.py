@@ -3,6 +3,7 @@ from wsgi_framework.url_router import MainRouter
 from config import settings
 from wsgi_framework.framework_logger import Logger
 
+
 LOG = Logger()
 
 
@@ -41,10 +42,7 @@ class MainEngine:
         pass
 
     def __call__(self, environ, start_response):
-        print("____")
-        print(settings.as_dict())
         router = MainRouter(settings.REGISTERED_URLS)
-
         url = environ["PATH_INFO"]
         method = environ["REQUEST_METHOD"]
 
