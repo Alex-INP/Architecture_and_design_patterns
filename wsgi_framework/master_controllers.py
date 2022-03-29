@@ -28,7 +28,7 @@ class BasicController:
 				if self.need_auth and not self.user.is_auth:
 					raise NotAuthenticatedError
 				elif self.need_auth and self.user.is_auth:
-					LOG["Debug"](f"User {self.user.username} successfully authenticated.")
+					LOG["Debug"](f"User {self.user.username} successfully authorized.")
 
 				return func(self.data)
 

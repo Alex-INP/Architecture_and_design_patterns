@@ -7,8 +7,8 @@ from wsgi_framework.framework_logger import Logger
 from wsgi_framework.middleware_operator import MiddlewareOperator
 from wsgi_framework.constants import CODE_200, CODE_500, CODE_401
 from wsgi_framework.exceptions import NotAuthenticatedError
-from wsgi_framework.framework_objects import UserBuilder
-from wsgi_framework.framework_authentication import BasicAuthenticator
+from wsgi_framework.user_objects import UserBuilder
+from wsgi_framework.framework_authorization import BasicAuthorizator
 
 
 LOG = Logger()
@@ -70,11 +70,10 @@ class MainEngine:
                 if LOG.is_type_enabled("Debug"):
                     LOG["Debug"](f"Controller '{controller.__class__.__name__}' extracted from router.")
                 controller.user = UserBuilder(environ).get_user()
-                if controller.need_auth:
-                    if "FRAMEWORK_DEFAULT_AUTH" in environ.keys():
-                        BasicAuthenticator(controller.user, environ).authenticate()
-                    else:
-                        settings.CUSTOM_AUTHENTICATOR(controller.user, environ).authenticate()
+                if "FRAMEWORK_DEFAULT_AUTH" in environ.keys():
+                    BasicAuthorizator(controller.user, environ).authorize()
+                else:
+                    settings.CUSTOM_AUTHORIZATOR(controller.user, environ).authorize()
             else:
                 if LOG.is_type_enabled("ERROR"):
                     LOG["ERROR"](f"No route '{settings.SITE_ADR}:{settings.SITE_PORT}{url}' registered")
@@ -89,7 +88,7 @@ class MainEngine:
             try:
                 result = [controller.execute()]
             except NotAuthenticatedError:
-                LOG["ERROR"](f"Controller execution demands authentication: {controller.__class__.__name__}.")
+                LOG["ERROR"](f"Controller execution demands demands user to be authorization: {controller.__class__.__name__}.")
                 raise
             except:
                 LOG["ERROR"](f"Error while controller execution: {controller.__class__.__name__}.")
@@ -109,4 +108,5 @@ class MainEngine:
 
             framework_templates_dir = os.path.join(os.path.join(os.path.dirname(__file__), "framework_templates"))
             start_response(CODE_500, [('Content-Type', 'text/html')])
-            return [load_default_template(os.path.join(framework_templates_dir, "internal_server_error.html"))]
+            return []
+            # return [load_default_template(os.path.join(framework_templates_dir, "internal_server_error.html"))]

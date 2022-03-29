@@ -1,18 +1,18 @@
 from abc import ABC, abstractmethod
 
 
-class AbstractAuthenticator(ABC):
+class AbstractAuthorizator(ABC):
 	@abstractmethod
-	def authenticate(self):
+	def authorize(self):
 		pass
 
 
-class BasicAuthenticator(AbstractAuthenticator):
+class BasicAuthorizator(AbstractAuthorizator):
 	def __init__(self, user, environ):
 		self.user = user
 		self.environ = environ
 
-	def authenticate(self):
+	def authorize(self):
 		# !!! Хардкод. Переделать с использованием орм.
 		if self.user.username == "Alex" and self.user.password == "1":
 			self.user.auth()

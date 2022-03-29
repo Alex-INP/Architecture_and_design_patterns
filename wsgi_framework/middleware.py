@@ -4,7 +4,8 @@ def print_environ(environ):
 		print(f"{key}: {val}")
 	print()
 
-def default_authentication(environ):
+
+def default_authorization(environ):
 	environ["FRAMEWORK_DEFAULT_AUTH"] = True
 
 

@@ -10,7 +10,7 @@ class UserBuilder:
 		return User()
 
 	def get_user_data(self):
-		data_list = base64.b64decode(self.environ["HTTP_AUTHORIZATION"]).decode().split(":")
+		data_list = base64.b64decode(self.environ["HTTP_AUTHORIZATION"].split(" ")[1]).decode().split(":")
 		return {"username": data_list[0], "password": data_list[1]}
 
 
