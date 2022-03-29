@@ -10,7 +10,8 @@ environ_content = [
 	"CONTENT_LENGTH": False,
 	"wsgi.input": ReadableObject("a=im&b=wsgi&c=data"),
 	"PATH_INFO": "/index",
-	"REQUEST_METHOD": "GET"
+	"REQUEST_METHOD": "GET",
+	"HTTP_AUTHORISATION": "QWxleDox"
 },
 {
 	"CONTENT_LENGTH": False,

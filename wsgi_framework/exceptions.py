@@ -4,7 +4,7 @@ class WsgiFrameworkException(Exception):
 
 class NotAuthenticatedError(Exception):
 	def __init__(self):
-		super().__init__("User is not authorized.")
+		super().__init__("User is not authenticated.")
 
 # Settings exceptions
 class NoSettingDefinedError(WsgiFrameworkException):

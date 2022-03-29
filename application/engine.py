@@ -10,6 +10,7 @@ from wsgi_framework.framework_logger import Logger
 from config import settings
 from urls.page_urls import registered_urls
 from application.logging.custom_logger import setup_custom_logger
+from application.authentication.custom_authentication import CustomAuthenticator
 
 
 def setup_logger():
@@ -33,6 +34,10 @@ def setup_logger():
 
 
 def process_settings():
+	try:
+		settings.CUSTOM_AUTHENTICATOR = CustomAuthenticator
+	except:
+		pass
 	try:
 		settings.APP_DIR_PATH = os.getcwd()
 		settings.APP_LOGGER_DIR_PATH = os.path.join(settings.APP_DIR_PATH, "logging")
