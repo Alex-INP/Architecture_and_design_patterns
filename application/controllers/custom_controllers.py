@@ -18,8 +18,14 @@ class AboutUsController(BasicController):
 		super().__init__()
 		self.template = "about_templates/about_main.html"
 
+	def post(self, data):
+		return bytes(f"Your data: {data}", "utf-8")
+
 
 class ContactsController(BasicController):
 	def __init__(self):
 		super().__init__()
 		self.template = "contacts.html"
+
+	def post(self, data):
+		return bytes("My custom post function answer", "utf-8")

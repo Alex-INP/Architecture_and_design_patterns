@@ -32,7 +32,7 @@ class BasicController:
 		return render_template(self.template, **self.context)
 
 	def post(self, data):
-		return bytes(f"Your data: {data}", "utf-8")
+		return render_template(self.template, **self.context)
 
 
 

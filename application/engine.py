@@ -25,7 +25,10 @@ def setup_logger():
 	except:
 		pass
 	LOG.set_output_mode(output_mode)
-	LOG.set_file_path(settings.APP_LOG_DIR_PATH)
+	try:
+		LOG.set_file_path(settings.APP_LOG_DIR_PATH)
+	except:
+		pass
 	LOG.register_logtypes(exclude=exclude)
 
 
@@ -65,8 +68,6 @@ if settings.DEBUG:
 		from windows_tester import environ_content, start_response
 
 		for request in environ_content:
-			print("-"*100)
-			print(f"Processing request: {request}\n")
 			result = MainEngine()(request, start_response)
 			print(result)
 			print("\nSuccessfully processed.")

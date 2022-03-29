@@ -4,12 +4,24 @@ TEMPLATES_DIR = "templates"
 GLOBAL_TEMPLATES_DIR = "global_templates"
 
 LOGGING = "True"
-LOGGER_STDOUT = "both"
+LOGGER_STDOUT = "console"
 LOG_FILE = "mylog"
 LOG_FILE_DIR = "logging"
 
-DEFAULT_LOGGER = "False"
-DEFAULT_LOGGER_EXCLUDE = ["Info"]
+DEFAULT_LOGGER = "True"
+DEFAULT_LOGGER_EXCLUDE = []
 
 SITE_ADR = "127.0.0.1"
 SITE_PORT = 8000
+
+#MIDDLEWARE = [
+#    "application.middleware.mid1",
+#    "application.middleware.mid2",
+#    "application.middleware.mid3",
+#    "application.middleware.mid4"
+#]
+
+MIDDLEWARE = [
+    "wsgi_framework.middleware.print_environ",
+    "middleware.custom_middleware.my_custom_middleware"
+]

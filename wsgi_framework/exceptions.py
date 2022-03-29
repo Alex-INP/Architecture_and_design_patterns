@@ -27,7 +27,7 @@ class LogTypeNotRegisteredError(WsgiFrameworkException):
 
 class LoggerStdoutSettingError(WsgiFrameworkException):
 	def __init__(self, mode_name):
-		super().__init__(f"Incorrect LOGGER_STDOUT setting name: '{mode_name}'. It can be: 'file', 'console', 'both'.")
+		super().__init__(f"Incorrect LOGGER_STDOUT setting mode name: '{mode_name}'. It can be: 'file', 'console', 'both'.")
 
 
 class NoLogFileError(WsgiFrameworkException):
@@ -45,6 +45,11 @@ class TemplateException(WsgiFrameworkException):
 		super().__init__(f"Template exception has occurred while handling {template}." if message is None else message)
 
 
+class NoTemplateError(TemplateException):
+	def __init__(self, path):
+		super().__init__(message=f"Not found. No template '{path}' found.")
+
+
 class NoParentTemplateError(TemplateException):
 	def __init__(self, path):
 		super().__init__(message=f"Not found. No parent template '{path}' found.")
@@ -53,3 +58,13 @@ class NoParentTemplateError(TemplateException):
 class SectionTagNameDuplicationError(TemplateException):
 	def __init__(self, section_name):
 		super().__init__(message=f"Section name in template is not unique: '{section_name}'.")
+
+# Middleware exceptions
+class MiddlewareException(WsgiFrameworkException):
+	def __init__(self, message):
+		super().__init__(f"Exception while handling middleware." if message is None else message)
+
+
+class NoMiddlewareFoundError(MiddlewareException):
+	def __init__(self, middleware_name, middleware_path):
+		super().__init__(f"No middleware function '{middleware_name}' found in '{middleware_path}' module. Check your MIDDLEWARE setting in 'settings.toml'.")

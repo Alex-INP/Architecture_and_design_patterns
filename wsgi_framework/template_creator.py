@@ -4,7 +4,8 @@ import re
 from jinja2 import Template
 from config import settings
 
-from wsgi_framework.exceptions import SectionTagNameDuplicationError, TemplateException, NoParentTemplateError
+from wsgi_framework.exceptions import SectionTagNameDuplicationError, TemplateException, NoParentTemplateError, \
+	NoTemplateError
 from wsgi_framework.framework_logger import Logger
 
 LOG = Logger()
@@ -45,7 +46,11 @@ def add_dependant_template(main_template, dep_template_path):
 
 
 def insert_child_template(child_template, parent_template_path):
-	parent_template_body = load_template_body(parent_template_path)
+	try:
+		parent_template_body = load_template_body(parent_template_path)
+	except FileNotFoundError:
+		raise NoParentTemplateError(parent_template_path)
+
 	parent_sections_names = parse_template_sections(parent_template_body)
 	child_sections_names = parse_template_sections(child_template)
 
@@ -92,7 +97,7 @@ def load_template_body(path):
 		with open(template_path["template_dir"], "r", encoding="utf-8") as file:
 			template_body = file.read()
 	except FileNotFoundError:
-		raise NoParentTemplateError(path)
+		raise NoTemplateError(path)
 	return template_body
 
 

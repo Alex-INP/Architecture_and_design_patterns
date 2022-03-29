@@ -39,5 +39,5 @@ environ_content = [
 ]
 
 def start_response(*args, **kwargs):
-	print(f"***Start_response called with\nargs: {args}\nkwargs: {kwargs}\n")
+	print(f"\n***Start_response called with\nargs: {args}\nkwargs: {kwargs}\n")
 
