@@ -6,3 +6,8 @@ def print_environ(environ):
 
 def default_authentication(environ):
 	environ["FRAMEWORK_DEFAULT_AUTH"] = True
+
+
+def favicon_suppress(environ):
+	if environ["PATH_INFO"] == "favicon.ico":
+		environ["PATH_INFO"] = "/index"

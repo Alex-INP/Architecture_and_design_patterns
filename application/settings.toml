@@ -18,6 +18,7 @@ DEFAULT_AUTHORIZATION = "True"
 
 MIDDLEWARE = [
     "wsgi_framework.middleware.print_environ",
+    "wsgi_framework.middleware.favicon_suppress",
     "wsgi_framework.middleware.default_authentication",
     "middleware.custom_middleware.my_custom_middleware"
 ]
