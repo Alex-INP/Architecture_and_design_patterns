@@ -397,5 +397,4 @@ Middleware создаются в файле ``application/middleware/custom_midd
 def print_environ(environ):
 	for key, val in environ.items():
 		print(f"{key}: {val}")
-	print()
 ```
