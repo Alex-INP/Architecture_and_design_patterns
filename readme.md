@@ -392,7 +392,7 @@ Middleware оформлен в виде списка из строк в пара
 ### Создание Middleware
 Middleware создаются в файле ``application/middleware/custom_middleware.py``. Они будут загружены при старте приложения,
 наряду с middleware по-умолчанию. Оформлены они должны быть в виде функций, принимающих один позиционный параметр - ``environ``.
-Пример:
+#### Пример:
 ```
 def print_environ(environ):
 	for key, val in environ.items():
