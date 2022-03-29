@@ -5,7 +5,8 @@ from wsgi_framework.url_router import MainRouter
 from config import settings
 from wsgi_framework.framework_logger import Logger
 from wsgi_framework.middleware_operator import MiddlewareOperator
-from wsgi_framework.constants import CODE_200, CODE_500
+from wsgi_framework.constants import CODE_200, CODE_500, CODE_401
+from wsgi_framework.exceptions import NotAuthenticatedError
 
 
 LOG = Logger()
@@ -79,12 +80,20 @@ class MainEngine:
                 LOG["Debug"](f"Procedures finished. Controller '{controller.__class__.__name__}' ready.")
             try:
                 result = [controller.execute()]
+            except NotAuthenticatedError:
+                LOG["ERROR"](f"Controller execution demands authorisation: {controller.__class__.__name__}.")
+                raise
             except:
                 LOG["ERROR"](f"Error while controller execution: {controller.__class__.__name__}.")
                 raise
             start_response(CODE_200, [('Content-Type', 'text/html')])
             LOG["Info"]("Request successfully processed.")
             return result
+        except NotAuthenticatedError:
+            start_response(CODE_401, [("Content-Type", "text/html"),
+                                      ("WWW-Authenticate", "Basic")])
+            return []
+
         except Exception as e:
             LOG["CRITICAL"](e)
             if settings.DEBUG:

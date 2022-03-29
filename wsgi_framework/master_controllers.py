@@ -2,6 +2,7 @@ import inspect
 
 from wsgi_framework.template_creator import render_template
 from wsgi_framework.framework_logger import Logger
+from wsgi_framework.exceptions import NotAuthenticatedError
 
 LOG = Logger()
 
@@ -17,6 +18,9 @@ class BasicController:
 			if func_name == self.method.lower() and func_name in ["get", "post", "update", "delete"]:
 				if LOG.is_type_enabled("Info"):
 					LOG["Info"](f"Method approved and about to execute: '{func_name}'.")
+
+				raise NotAuthenticatedError
+
 				return func(self.data)
 
 		if LOG.is_type_enabled("ERROR"):

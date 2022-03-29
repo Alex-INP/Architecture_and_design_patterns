@@ -2,6 +2,9 @@ class WsgiFrameworkException(Exception):
 	def __init__(self, message=None):
 		super().__init__("Framework exception has occurred." if message is None else message)
 
+class NotAuthenticatedError(Exception):
+	def __init__(self):
+		super().__init__("User is not authorized.")
 
 # Settings exceptions
 class NoSettingDefinedError(WsgiFrameworkException):
