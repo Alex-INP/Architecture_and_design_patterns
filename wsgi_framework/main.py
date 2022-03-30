@@ -108,5 +108,4 @@ class MainEngine:
 
             framework_templates_dir = os.path.join(os.path.join(os.path.dirname(__file__), "framework_templates"))
             start_response(CODE_500, [('Content-Type', 'text/html')])
-            return []
-            # return [load_default_template(os.path.join(framework_templates_dir, "internal_server_error.html"))]
+            return [load_default_template(os.path.join(framework_templates_dir, "internal_server_error.html"))]
