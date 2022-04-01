@@ -22,6 +22,8 @@ class AboutUsController(BasicController):
 	def __init__(self):
 		super().__init__()
 		self.template = "about_templates/about_main.html"
+		self.allow_cors = True
+		self.allowed_cors_domains = ["http://127.0.0.1:8000"]
 
 	def post(self, data):
 		return bytes(f"Your data: {data}", "utf-8")

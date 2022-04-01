@@ -14,6 +14,8 @@ class BasicController:
 		self.data = {}
 		self.user = None
 		self.need_auth = False
+		self.allow_cors = False
+		self.allowed_cors_domains = []
 
 	def pre_execute(self):
 		pass

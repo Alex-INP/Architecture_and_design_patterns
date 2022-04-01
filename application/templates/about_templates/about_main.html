@@ -7,5 +7,19 @@
 </head>
 <body>
     <div>This is About Us page</div>
+    <button id="trigger_btn" onclick="trigger_exec()">Trigger</button>
 </body>
+<script src="https://code.jquery.com/jquery-3.5.1.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+<script>
+    "use strict"
+    function trigger_exec() {
+        $.ajax({
+            url: "http://127.0.0.1:9090/aboutus",
+            success: function(data){
+                $("button#trigger_btn").after(data);
+            }
+        });
+    };
+</script>
 </html>

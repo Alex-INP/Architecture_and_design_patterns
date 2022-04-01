@@ -54,6 +54,7 @@ class MainEngine:
     def __call__(self, environ, start_response):
         try:
             MiddlewareOperator(environ)()
+            response_headers = [('Content-Type', 'text/html')]
 
             router = MainRouter(settings.REGISTERED_URLS)
             url = environ["PATH_INFO"]
@@ -82,6 +83,11 @@ class MainEngine:
             data = extract_request_data(environ)
             controller.set_data(data)
             controller.set_method(method)
+            if controller.allow_cors:
+                response_headers.append(
+                    ("Access-Control-Allow-Origin",
+                     ",".join(controller.allowed_cors_domains) if controller.allowed_cors_domains else "*")
+                )
 
             if LOG.is_type_enabled("Debug"):
                 LOG["Debug"](f"Procedures finished. Controller '{controller.__class__.__name__}' ready.")
@@ -94,7 +100,7 @@ class MainEngine:
                 LOG["ERROR"](f"Error while controller execution: {controller.__class__.__name__}.")
                 raise
 
-            start_response(CODE_200, [('Content-Type', 'text/html')])
+            start_response(CODE_200, response_headers)
             LOG["Info"]("Request successfully processed.")
             return result
         except NotAuthenticatedError:
