@@ -43,11 +43,43 @@ class BasicController:
 	def set_data(self, data):
 		self.data = data
 
+	# def get(self, data):
+	# 	return render_template(self.template, **self.context)
+
+	# def post(self, data):
+	# 	return render_template(self.template, **self.context)
+
+class GetAddition(BasicController):
+	def __init__(self):
+		super().__init__()
+
 	def get(self, data):
 		return render_template(self.template, **self.context)
 
+class PostAddition(BasicController):
+	def __init__(self):
+		super().__init__()
+
 	def post(self, data):
 		return render_template(self.template, **self.context)
+
+class UpdateAddition(BasicController):
+	def __init__(self):
+		super().__init__()
+
+	def update(self, data):
+		return render_template(self.template, **self.context)
+
+class DeleteAddition(BasicController):
+	def __init__(self):
+		super().__init__()
+
+	def update(self, data):
+		return render_template(self.template, **self.context)
+
+class StandardController(GetAddition, PostAddition):
+	def __init__(self):
+		super().__init__()
 
 
 

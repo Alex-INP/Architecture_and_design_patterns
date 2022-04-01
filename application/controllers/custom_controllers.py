@@ -1,9 +1,9 @@
-from wsgi_framework.master_controllers import BasicController
+from wsgi_framework.master_controllers import StandardController
 from wsgi_framework.framework_logger import Logger
 
 LOG = Logger()
 
-class IndexController(BasicController):
+class IndexController(StandardController):
 	def __init__(self):
 		super().__init__()
 		self.template = "index.html"
@@ -18,7 +18,7 @@ class IndexController(BasicController):
 	# 		self.user.auth()
 
 
-class AboutUsController(BasicController):
+class AboutUsController(StandardController):
 	def __init__(self):
 		super().__init__()
 		self.template = "about_templates/about_main.html"
@@ -29,7 +29,7 @@ class AboutUsController(BasicController):
 		return bytes(f"Your data: {data}", "utf-8")
 
 
-class ContactsController(BasicController):
+class ContactsController(StandardController):
 	def __init__(self):
 		super().__init__()
 		self.template = "contacts.html"

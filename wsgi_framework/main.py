@@ -83,11 +83,7 @@ class MainEngine:
             data = extract_request_data(environ)
             controller.set_data(data)
             controller.set_method(method)
-            if controller.allow_cors:
-                response_headers.append(
-                    ("Access-Control-Allow-Origin",
-                     ",".join(controller.allowed_cors_domains) if controller.allowed_cors_domains else "*")
-                )
+
 
             if LOG.is_type_enabled("Debug"):
                 LOG["Debug"](f"Procedures finished. Controller '{controller.__class__.__name__}' ready.")
@@ -99,6 +95,12 @@ class MainEngine:
             except:
                 LOG["ERROR"](f"Error while controller execution: {controller.__class__.__name__}.")
                 raise
+
+            if controller.allow_cors:
+                response_headers.append(
+                    ("Access-Control-Allow-Origin",
+                     ",".join(controller.allowed_cors_domains) if controller.allowed_cors_domains else "*")
+                )
 
             start_response(CODE_200, response_headers)
             LOG["Info"]("Request successfully processed.")
