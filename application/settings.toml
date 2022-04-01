@@ -20,5 +20,3 @@ MIDDLEWARE = [
     "wsgi_framework.middleware.default_authorization",
     "middleware.custom_middleware.my_custom_middleware"
 ]
-
-ALLOW_CORS
