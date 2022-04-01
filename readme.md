@@ -40,9 +40,9 @@ _______
 Наследуясь от класса ``master_controllers.StandardController``, контроллер получает возможность
 обрабатывать GET и POST запросы.
 
-Для реализации UPDATE и DELETE необходимо дополнительно унаследоваться от ``UpdateAddition`` и ``DeleteAddition``.
-Для минимальной работы контроллера необходимо вызвать ``super().__init__()``, задать атрибут экземпляра ``self.template`` 
-(путь к шаблону) и, по необходимости, ``self.context`` (аргументы для jinja2) в виде словаря.
+Для реализации UPDATE и DELETE необходимо дополнительно унаследоваться от ``master_controllers.UpdateAddition`` и 
+``master_controllers.DeleteAddition``. Для минимальной работы контроллера необходимо вызвать ``super().__init__()``, 
+задать атрибут экземпляра ``self.template`` (путь к шаблону) и, по необходимости, ``self.context`` (аргументы для jinja2) в виде словаря.
 #### Пример:
 ```
 class ContactsController(StandardController, UpdateAddition):
