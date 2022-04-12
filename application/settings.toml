@@ -20,3 +20,6 @@ MIDDLEWARE = [
     "wsgi_framework.middleware.default_authorization",
     "middleware.custom_middleware.my_custom_middleware"
 ]
+
+DATABASE_NAME = "application_database.db"
+PRINT_QUERIES = "True"

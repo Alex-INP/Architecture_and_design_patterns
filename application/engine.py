@@ -46,6 +46,7 @@ def process_settings():
 
 		settings.LOGGING = True if settings.LOGGING.lower() == "true" else False
 		settings.DEBUG = True if settings.DEBUG.lower() == "true" else False
+		settings.PRINT_QUERIES = True if settings.PRINT_QUERIES.lower() == "true" else False
 	except AttributeError as e:
 		raise NoSettingDefinedError(e)
 

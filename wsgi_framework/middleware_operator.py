@@ -35,12 +35,3 @@ class MiddlewareOperator:
 		except:
 			return
 
-	# def execute_middlewares(self, environ, all_middleware):
-	# 	current_middleware = all_middleware.pop()
-	# 	# print(current_middleware)
-	# 	if len(self.middleware_list) != 0:
-	# 		self.execute_middlewares(environ, self.middleware_list)
-	# 		current_middleware(environ)
-	# 		return current_middleware
-	# 	else:
-	# 		current_middleware(environ)

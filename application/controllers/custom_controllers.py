@@ -1,5 +1,6 @@
 from wsgi_framework.master_controllers import StandardController
 from wsgi_framework.framework_logger import Logger
+from application.models.custom_models import Good
 
 LOG = Logger()
 
@@ -35,4 +36,9 @@ class ContactsController(StandardController):
 		self.template = "contacts.html"
 
 	def post(self, data):
+		# new_good = Good(name="Fridge", description="very good")
+		# new_good.add_row()
+		# new_good.update(price=200)
+		# new_good = Good().filter(name="Fridge")[0]
+		# new_good.delete()
 		return bytes("My custom post function answer", "utf-8")

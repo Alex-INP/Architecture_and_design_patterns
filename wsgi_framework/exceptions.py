@@ -16,7 +16,6 @@ class NoSettingDefinedError(WsgiFrameworkException):
 	def get_attr_name(e):
 		return e.split(" ")[-1]
 
-
 # Logger exceptions
 class LogTypeNameDuplicationError(WsgiFrameworkException):
 	def __init__(self, logtype_name):
@@ -71,3 +70,9 @@ class MiddlewareException(WsgiFrameworkException):
 class NoMiddlewareFoundError(MiddlewareException):
 	def __init__(self, middleware_name, middleware_path):
 		super().__init__(f"No middleware function '{middleware_name}' found in '{middleware_path}' module. Check your MIDDLEWARE setting in 'settings.toml'.")
+
+# ORM exceptions
+class OrmException(WsgiFrameworkException):
+	def __init__(self, message):
+		super().__init__(f"ORM exception occurred." if message is None else message)
+

@@ -9,6 +9,7 @@ from wsgi_framework.constants import CODE_200, CODE_500, CODE_401
 from wsgi_framework.exceptions import NotAuthenticatedError
 from wsgi_framework.user_objects import UserBuilder
 from wsgi_framework.framework_authorization import BasicAuthorizator
+from wsgi_framework.framework_orm import OrmInitializer
 
 
 LOG = Logger()
@@ -43,9 +44,11 @@ def extract_request_data(environ):
             result[key] = replace_hex(value)
     return result
 
+
 def load_default_template(path):
     with open(path, "rb") as file:
         return file.read()
+
 
 class MainEngine:
     def __init__(self):
@@ -53,6 +56,7 @@ class MainEngine:
 
     def __call__(self, environ, start_response):
         try:
+            OrmInitializer().initialize_tables()
             MiddlewareOperator(environ)()
             response_headers = [('Content-Type', 'text/html')]
 
